@@ -19,7 +19,7 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню|/cancel"
 
-MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY = range(4)
+MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2 = range(5)
 
 def start(update, _):
     # Начинаем разговор с вопроса
@@ -70,6 +70,9 @@ def oper_choise(update, _):
     if oper == "Сложение":
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY
+    elif oper == "Вычитание":
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY2
     elif oper == "Главное меню":
         return MAINMENU
     else:
@@ -88,6 +91,18 @@ def sum_oper(update, _):
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY       
 
+def subtraction_oper(update, _):
+    msg = update.message.text
+    print(msg)
+    items = msg.split()
+    try:
+        x = int(items[0])
+        y = int(items[1])
+        update.message.reply_text(f'{x}-{y} = {x - y}')
+        return MAINMENU
+    except:
+        update.message.reply_text('Вы ввели неправильно, жмакните /start')
+        return CATCHREPLY2
          
     
 def cancel(update, _):
@@ -101,7 +116,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("5735131343:AAHlO1Ppv0VktsGV4-B8Rhzf3oKPFdlsfPQ")
+    updater = Updater("Token")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
@@ -115,6 +130,7 @@ if __name__ == '__main__':
             CHOOSING: [MessageHandler(Filters.regex('^(Рациональные|Комплексные|Выход)$'), choosing)],
             OPERCHOISE: [MessageHandler(Filters.regex(f'^{operation_keybord_main}$'), oper_choise)],
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
+            CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
         },
         # точка выхода из разговора
         fallbacks=[CommandHandler('cancel', cancel)],
