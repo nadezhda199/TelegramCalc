@@ -1,4 +1,4 @@
-import logging # модуль
+import logging 
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
     Updater,
@@ -90,17 +90,12 @@ def sum_oper(update, _):
          
     
 def cancel(update, _):
-    # определяем пользователя
     user = update.message.from_user
-    # Пишем в журнал о том, что пользователь не разговорчивый
-    logger.info("Пользователь %s отменил разговор.", user.first_name)
-    # Отвечаем на отказ поговорить
+    logger.info("User %s finished work with calculator.", user.first_name)
     update.message.reply_text(
-        'Мое дело предложить - Ваше отказаться'
-        ' Будет скучно - пиши.', 
+        'Thank you for your visit', 
         reply_markup=ReplyKeyboardRemove()
     )
-    # Заканчиваем разговор.
     return ConversationHandler.END     
 
 if __name__ == '__main__':
@@ -110,7 +105,6 @@ if __name__ == '__main__':
     dispatcher = updater.dispatcher
 
     # Определяем обработчик разговоров `ConversationHandler` 
-    # с состояниями GENDER, PHOTO, LOCATION и BIO
     conv_handler = ConversationHandler( # здесь строится логика разговора
         # точка входа в разговор
         entry_points=[CommandHandler('start', start)],
@@ -120,7 +114,6 @@ if __name__ == '__main__':
             CHOOSING: [MessageHandler(Filters.regex('^(Рациональные|Комплексные|Выход)$'), choosing)],
             OPERCHOISE: [MessageHandler(Filters.regex(f'^{operation_keybord_main}$'), oper_choise)],
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
-            # BIO: [MessageHandler(Filters.text & ~Filters.command, bio)],
         },
         # точка выхода из разговора
         fallbacks=[CommandHandler('cancel', cancel)],
