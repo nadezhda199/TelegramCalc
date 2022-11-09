@@ -42,27 +42,28 @@ def mainmenu(update, _):
     return CHOOSING
 
 def choosing(update, _):
-    # определяем пользователя
     user = update.message.from_user
-    num_choise = update.message.text
-    if num_choise == 'Рациональные':
+    num_choiсe = update.message.text
+    if num_choiсe == 'Рациональные':
         markup_key = ReplyKeyboardMarkup(operation_keybord, one_time_keyboard=True)
-        update.message.reply_text('Какое действие вы хотите сделать?',reply_markup=markup_key,)
+        update.message.reply_text('Какое действие вы хотите выполнить?',reply_markup=markup_key,)
         return OPERCHOISE  
-    elif num_choise == 'Комплексные':
-        pass
-    elif num_choise == 'Выход':
-        pass
-    else:
-        pass
-    # Пишем в журнал пол пользователя
-    logger.info("Пол %s: %s", user.first_name, update.message.text)
-    # Следующее сообщение с удалением клавиатуры `ReplyKeyboardRemove`
-    update.message.reply_text(
-        'Хорошо. Сколько тебе лет ?, или отправь /skip, если не хочешь отвечать на этот вопрос.',
-        reply_markup=ReplyKeyboardRemove(),
+    elif num_choiсe == 'Комплексные':
+        markup_key = ReplyKeyboardMarkup(operation_keybord, one_time_keyboard=True)
+        update.message.reply_text('Какое действие вы хотите выполнить?',reply_markup=markup_key,)
+        return OPERCHOISE
+    elif num_choiсe == 'Выход':
+        logger.info("User %s finished work with calculator.", user.first_name)
+        update.message.reply_text(
+        'Спасибо, что посетили нас', 
+        reply_markup=ReplyKeyboardRemove()
     )
-    # переходим к этапу `AGE`
+        return ConversationHandler.END
+    else:
+        update.message.reply_text('Пожалуйста, выберите действие')
+        return MAINMENU
+    
+   
     
 def oper_choise(update, _):
     oper = update.message.text
@@ -93,14 +94,14 @@ def cancel(update, _):
     user = update.message.from_user
     logger.info("User %s finished work with calculator.", user.first_name)
     update.message.reply_text(
-        'Thank you for your visit', 
+        'Спасибо, что посетили нас', 
         reply_markup=ReplyKeyboardRemove()
     )
     return ConversationHandler.END     
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("Token")
+    updater = Updater("5735131343:AAHlO1Ppv0VktsGV4-B8Rhzf3oKPFdlsfPQ")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
