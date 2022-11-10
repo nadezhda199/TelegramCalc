@@ -15,9 +15,9 @@ logger = logging.getLogger(__name__)
 
 operation_keybord = [["Сложение", "Вычитание", "Умножение"],
                     ["Деление", "Возведение в степень", "Корень квадратный числа"],
-                    ["Главное меню", "/cancel"]]
+                    ["Главное меню"]]
 
-operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню|/cancel"
+operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
 MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2 = range(5)
 
@@ -30,6 +30,7 @@ def start(update, _):
 
 def mainmenu(update, _):
     user = update.message.from_user
+    logger.info("User %s started work with calculator.", user.first_name)
     # Список кнопок для ответа
     reply_keyboard = [['Рациональные', 'Комплексные', 'Выход']]
     # Создаем простую клавиатуру для ответа
@@ -60,12 +61,11 @@ def choosing(update, _):
     )
         return ConversationHandler.END
     else:
-        update.message.reply_text('Пожалуйста, выберите действие')
-        return MAINMENU
+        pass
     
    
     
-def oper_choise(update, _):
+def oper_choice(update, _):
     oper = update.message.text
     if oper == "Сложение":
         update.message.reply_text('Введите два числа через пробел')
@@ -74,9 +74,12 @@ def oper_choise(update, _):
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY2
     elif oper == "Главное меню":
+        update.message.reply_text(
+        'возвращение в главное меню', 
+    )
         return MAINMENU
     else:
-        pass    
+        pass
 
 def sum_oper(update, _):
     msg = update.message.text
@@ -86,7 +89,7 @@ def sum_oper(update, _):
         x = int(items[0])
         y = int(items[1])
         update.message.reply_text(f'{x}+{y} = {x+y}')
-        return MAINMENU 
+        return OPERCHOISE 
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY       
@@ -99,7 +102,7 @@ def subtraction_oper(update, _):
         x = int(items[0])
         y = int(items[1])
         update.message.reply_text(f'{x}-{y} = {x - y}')
-        return MAINMENU
+        return OPERCHOISE
     except:
         update.message.reply_text('Вы ввели неправильно, жмакните /start')
         return CATCHREPLY2
@@ -116,7 +119,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("Token")
+    updater = Updater("5735131343:AAHlO1Ppv0VktsGV4-B8Rhzf3oKPFdlsfPQ")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
@@ -126,9 +129,9 @@ if __name__ == '__main__':
         entry_points=[CommandHandler('start', start)],
         # этапы разговора, каждый со своим списком обработчиков сообщений
         states={
-            MAINMENU: [MessageHandler(Filters.text, mainmenu)],
+            MAINMENU: [MessageHandler(Filters.text & ~Filters.command, mainmenu)],
             CHOOSING: [MessageHandler(Filters.regex('^(Рациональные|Комплексные|Выход)$'), choosing)],
-            OPERCHOISE: [MessageHandler(Filters.regex(f'^{operation_keybord_main}$'), oper_choise)],
+            OPERCHOISE: [MessageHandler(Filters.regex(f'^{operation_keybord_main}$'), oper_choice)],
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
         },
