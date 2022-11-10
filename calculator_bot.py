@@ -125,7 +125,7 @@ def subtraction_oper(update, _):
         x = float(items[0])
         y = float(items[1])
         update.message.reply_text(f'{x}-{y} = {x - y}')
-        logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x-y)
+        logger.info("Пример пользователя %s: %s - %s = %s ", user.first_name, x, y, x-y)
         return OPERCHOISE # меню выбора оператора
     except:
         update.message.reply_text('Вы ввели неправильно, жмакните /start')
@@ -141,7 +141,7 @@ def power_oper(update, _):
         x = float(items[0])
         y = float(items[1])
         update.message.reply_text(f'{x}**{y} = {x ** y}')
-        logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x**y)
+        logger.info("Пример пользователя %s: %s ** %s = %s ", user.first_name, x, y, x**y)
         return OPERCHOISE # меню выбора оператора
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
@@ -178,13 +178,13 @@ def div_rem(update, _):
         x = float(items[0])
         y = float(items[1])
         update.message.reply_text(f'{x}%{y} = {x % y}')
-        logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x%y)
+        logger.info("Пример пользователя %s: %s % %s = %s ", user.first_name, x, y, x%y)
         #if y == 0:
             #update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
             #return CATCHREPLY5
         #else:
             #update.message.reply_text(f'{x}%{y} = {x % y}')
-            return DIVISION
+        return DIVISION
     except:
         update.message.reply_text('Ошибка ввода')
         logger.error("Ошибка ввода", ext_info = True) # вот тут я применил метод error модуля logging и здесь я остановился с включением логов
@@ -253,7 +253,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("token")
+    updater = Updater("Token")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
