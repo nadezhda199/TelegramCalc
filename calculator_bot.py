@@ -21,8 +21,8 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
-MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
-    10)
+MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3,CATCHREPLY4, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
+    11)
 
 
 def start(update, _):
@@ -172,7 +172,7 @@ def div_rem(update, _):
             return CATCHREPLY5
         else:
             update.message.reply_text(f'{x}%{y} = {x % y}')
-            return OPERCHOISE
+            return DIVISION
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY5
@@ -186,7 +186,7 @@ def division_int(update, _):
         y = float(items[1])
         if y != 0:
             update.message.reply_text(f'{x}//{y} = {x // y}')
-            return OPERCHOISE
+            return DIVISION
         else:
             update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
             return CATCHREPLY6
@@ -203,7 +203,7 @@ def division(update, _):
         y = float(items[1])
         if y != 0:
             update.message.reply_text(f'{x}/{y} = {round((x / y),2)}')
-            return OPERCHOISE
+            return DIVISION
         else:
             update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
             return CATCHREPLY7
@@ -211,7 +211,6 @@ def division(update, _):
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY7
 
-=======
 def sqrt_oper(update, _):
     msg = update.message.text
     print(msg)
@@ -254,11 +253,12 @@ if __name__ == '__main__':
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
             CATCHREPLY3: [MessageHandler(Filters.text & ~Filters.command, power_oper)],
+            CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
             DIVISION: [MessageHandler(Filters.text & ~Filters.command, division_ch)],
             CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
             CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
-            CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)]
-            CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
+            CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)],
+            
 
         },
         # точка выхода из разговора

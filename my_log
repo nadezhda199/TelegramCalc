@@ -1,0 +1,143 @@
+2022-11-09 18:39:57,945 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 18:40:43,628 - __main__ - INFO - Пол Andrei: Комплексные
+2022-11-09 18:41:02,515 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 18:41:02,515 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 18:47:04,289 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 18:47:26,862 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 18:50:34,750 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 18:50:34,750 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 18:50:47,941 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 18:51:16,568 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 18:53:05,234 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 18:53:05,235 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:09:53,384 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:12:53,573 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:12:53,573 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:21:48,583 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:22:04,669 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:22:31,239 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 20:24:22,127 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:24:22,128 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:26:30,474 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:26:41,810 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:26:53,567 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:28:03,099 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:28:10,257 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:28:10,257 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:30:41,015 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:30:48,183 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:31:00,366 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:31:34,565 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:31:36,793 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 20:31:49,924 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:31:49,924 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:34:41,254 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:34:50,950 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:35:38,084 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:35:38,084 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:43:28,799 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:43:38,217 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:43:53,464 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\conversationhandler.py", line 627, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "c:\Users\андрей\OneDrive\Рабочий стол\Study\PYTHON\Homework\Hometask 10\TelegramCalc\calculator_bot.py", line 79, in oper_choise
+    update.message.reply_text(reply_markup=ReplyKeyboardRemove())
+TypeError: Message.reply_text() missing 1 required positional argument: 'text'
+2022-11-09 20:43:55,460 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\conversationhandler.py", line 627, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "c:\Users\андрей\OneDrive\Рабочий стол\Study\PYTHON\Homework\Hometask 10\TelegramCalc\calculator_bot.py", line 79, in oper_choise
+    update.message.reply_text(reply_markup=ReplyKeyboardRemove())
+TypeError: Message.reply_text() missing 1 required positional argument: 'text'
+2022-11-09 20:43:57,748 - telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\dispatcher.py", line 557, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\conversationhandler.py", line 627, in handle_update
+    new_state = handler.handle_update(update, dispatcher, check_result, context)
+  File "C:\Users\андрей\AppData\Local\Programs\Python\Python310\lib\site-packages\telegram\ext\handler.py", line 199, in handle_update
+    return self.callback(update, context)
+  File "c:\Users\андрей\OneDrive\Рабочий стол\Study\PYTHON\Homework\Hometask 10\TelegramCalc\calculator_bot.py", line 79, in oper_choise
+    update.message.reply_text(reply_markup=ReplyKeyboardRemove())
+TypeError: Message.reply_text() missing 1 required positional argument: 'text'
+2022-11-09 20:44:24,281 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:44:24,281 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:49:10,556 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:49:17,188 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:49:41,753 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:50:05,254 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:50:05,255 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 20:53:49,815 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 20:54:30,453 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:54:46,034 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 20:56:15,754 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 20:56:15,754 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 21:05:12,781 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 21:05:37,006 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 21:05:48,526 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 21:06:22,257 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 21:06:29,005 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 21:06:29,006 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 21:06:50,459 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 21:07:06,717 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 21:07:14,919 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 21:07:57,088 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 21:08:05,024 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 21:08:43,348 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 21:08:43,348 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 21:12:38,751 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 21:12:54,679 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 21:13:20,975 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-09 21:13:34,178 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 21:13:34,179 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-09 21:14:13,650 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-09 21:14:22,240 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 21:14:32,820 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-09 21:15:43,042 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-09 21:15:43,042 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-10 12:48:22,431 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-10 12:48:53,542 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 12:49:08,986 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 12:49:35,038 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 12:49:36,193 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-10 12:52:14,191 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-10 12:52:14,191 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-10 13:45:10,027 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-10 13:45:25,447 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 13:47:23,685 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 13:47:24,932 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-10 13:47:32,434 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-10 13:47:32,435 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-10 13:48:28,882 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-10 13:48:37,825 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 13:49:50,670 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 13:50:11,631 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 13:50:17,916 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-10 13:50:39,032 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-10 13:50:39,032 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-10 14:20:26,864 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-10 14:20:38,151 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 14:20:56,873 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 14:21:47,475 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 14:22:11,458 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 14:22:46,644 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 14:23:05,469 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 14:23:29,411 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-10 14:23:32,793 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-10 14:23:32,794 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2022-11-10 15:55:01,117 - apscheduler.scheduler - INFO - Scheduler started
+2022-11-10 15:55:11,170 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 15:55:30,848 - __main__ - INFO - User Andrei started work with calculator.
+2022-11-10 15:58:48,877 - __main__ - INFO - User Andrei finished work with calculator.
+2022-11-10 15:58:53,420 - telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+2022-11-10 15:58:53,421 - apscheduler.scheduler - INFO - Scheduler has been shut down
