@@ -21,8 +21,8 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
-MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3,CATCHREPLY4, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
-    11)
+MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, CATCHREPLY4, DIVISION, CATCHREPLY5,\
+CATCHREPLY6, CATCHREPLY7 = range(11)
 
 
 def start(update, _):
@@ -82,7 +82,7 @@ def oper_choice(update, _):
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY3
     elif oper == "Деление":
-        reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Выход']]
+        reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Главное меню']]
         markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
         return DIVISION
@@ -96,9 +96,6 @@ def oper_choice(update, _):
         return MAINMENU
     else:
         pass
-
-
-
 
 def sum_oper(update, _):
     msg = update.message.text
@@ -153,12 +150,14 @@ def division_ch(update, _):
     elif msg == 'Обычное':
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY7
-    elif msg == 'Выход':
-        update.message.reply_text('Возвращение в главное меню')
+    elif msg == "Главное меню":
+        update.message.reply_text(
+            'возвращение в главное меню',
+        )
         return MAINMENU
     else:
         update.message.reply_text('Попобуйте еще раз выбрать')
-        return OPERCHOISE
+        return DIVISION
 
 
 def div_rem(update, _):
@@ -254,7 +253,7 @@ if __name__ == '__main__':
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
             CATCHREPLY3: [MessageHandler(Filters.text & ~Filters.command, power_oper)],
             CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
-            DIVISION: [MessageHandler(Filters.text & ~Filters.command, division_ch)],
+            DIVISION: [MessageHandler(Filters.regex('^(Остаток|Целочисленное|Обычное|Главное меню)$'), division_ch)],
             CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
             CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
             CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)],
