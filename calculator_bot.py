@@ -1,4 +1,4 @@
-import logging 
+import logging
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
     Updater,
@@ -7,19 +7,22 @@ from telegram.ext import (
     Filters,
     ConversationHandler,
 )
-logging.basicConfig( filename='my_log', filemode='a', encoding='utf-8',
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', 
-    level=logging.INFO
-)
+
+logging.basicConfig(filename='my_log', filemode='a', encoding='utf-8',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO
+                    )
 logger = logging.getLogger(__name__)
 
 operation_keybord = [["Сложение", "Вычитание", "Умножение"],
-                    ["Деление", "Возведение в степень", "Корень квадратный числа"],
-                    ["Главное меню"]]
+                     ["Деление", "Возведение в степень", "Корень квадратный числа"],
+                     ["Главное меню"]]
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
-MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3 = range(6)
+MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
+    10)
+
 
 def start(update, _):
     # Начинаем разговор с вопроса
@@ -27,6 +30,7 @@ def start(update, _):
         'Здравствуйте, вас приветсвует телеграм-калькулятор. Для продолжения нажмите любую клавишу')
 
     return MAINMENU
+
 
 def mainmenu(update, _):
     user = update.message.from_user
@@ -38,33 +42,33 @@ def mainmenu(update, _):
     # Начинаем разговор с вопроса
     update.message.reply_text(
         'Выберите с какими числами вы хотите работать',
-        reply_markup=markup_key,)
+        reply_markup=markup_key, )
 
     return CHOOSING
+
 
 def choosing(update, _):
     user = update.message.from_user
     num_choiсe = update.message.text
     if num_choiсe == 'Рациональные':
         markup_key = ReplyKeyboardMarkup(operation_keybord, one_time_keyboard=True)
-        update.message.reply_text('Какое действие вы хотите выполнить?',reply_markup=markup_key,)
-        return OPERCHOISE  
+        update.message.reply_text('Какое действие вы хотите выполнить?', reply_markup=markup_key, )
+        return OPERCHOISE
     elif num_choiсe == 'Комплексные':
         markup_key = ReplyKeyboardMarkup(operation_keybord, one_time_keyboard=True)
-        update.message.reply_text('Какое действие вы хотите выполнить?',reply_markup=markup_key,)
+        update.message.reply_text('Какое действие вы хотите выполнить?', reply_markup=markup_key, )
         return OPERCHOISE
     elif num_choiсe == 'Выход':
         logger.info("User %s finished work with calculator.", user.first_name)
         update.message.reply_text(
-        'Спасибо, что посетили нас', 
-        reply_markup=ReplyKeyboardRemove()
-    )
+            'Спасибо, что посетили нас',
+            reply_markup=ReplyKeyboardRemove()
+        )
         return ConversationHandler.END
     else:
         pass
-    
-   
-    
+
+
 def oper_choice(update, _):
     oper = update.message.text
     if oper == "Сложение":
@@ -76,26 +80,35 @@ def oper_choice(update, _):
     elif oper == "Возведение в степень":
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY3
+    elif oper == "Деление":
+        reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Выход']]
+        markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+        update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
+        return DIVISION
     elif oper == "Главное меню":
         update.message.reply_text(
-        'возвращение в главное меню', 
-    )
+            'возвращение в главное меню',
+        )
         return MAINMENU
     else:
         pass
 
+
+
+
 def sum_oper(update, _):
     msg = update.message.text
     print(msg)
-    items = msg.split() # /sum 123 534543
+    items = msg.split()  # /sum 123 534543
     try:
         x = float(items[0])
         y = float(items[1])
-        update.message.reply_text(f'{x}+{y} = {x+y}')
-        return OPERCHOISE 
+        update.message.reply_text(f'{x}+{y} = {x + y}')
+        return OPERCHOISE
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
-        return CATCHREPLY       
+        return CATCHREPLY
+
 
 def subtraction_oper(update, _):
     msg = update.message.text
@@ -110,6 +123,7 @@ def subtraction_oper(update, _):
         update.message.reply_text('Вы ввели неправильно, жмакните /start')
         return CATCHREPLY2
 
+
 def power_oper(update, _):
     msg = update.message.text
     print(msg)
@@ -117,21 +131,90 @@ def power_oper(update, _):
     try:
         x = float(items[0])
         y = float(items[1])
-        update.message.reply_text(f'{x}**{y} = {x**y}')
-        return OPERCHOISE 
+        update.message.reply_text(f'{x}**{y} = {x ** y}')
+        return OPERCHOISE
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY3
-         
-    
+
+def division_ch(update, _):
+    msg = update.message.text
+    if msg == 'Остаток':
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY5
+    elif msg == 'Целочисленное':
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY6
+    elif msg == 'Обычное':
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY7
+    elif msg == 'Выход':
+        update.message.reply_text('Возвращение в главное меню')
+        return MAINMENU
+    else:
+        update.message.reply_text('Попобуйте еще раз выбрать')
+        return OPERCHOISE
+
+
+def div_rem(update, _):
+    msg = update.message.text
+    items = msg.split()
+    try:
+        x = float(items[0])
+        y = float(items[1])
+        if y == 0:
+            update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
+            return CATCHREPLY5
+        else:
+            update.message.reply_text(f'{x}%{y} = {x % y}')
+            return OPERCHOISE
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        return CATCHREPLY5
+
+
+def division_int(update, _):
+    msg = update.message.text
+    items = msg.split()
+    try:
+        x = float(items[0])
+        y = float(items[1])
+        if y != 0:
+            update.message.reply_text(f'{x}//{y} = {x // y}')
+            return OPERCHOISE
+        else:
+            update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
+            return CATCHREPLY6
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        return CATCHREPLY6
+
+
+def division(update, _):
+    msg = update.message.text
+    items = msg.split()
+    try:
+        x = float(items[0])
+        y = float(items[1])
+        if y != 0:
+            update.message.reply_text(f'{x}/{y} = {round((x / y),2)}')
+            return OPERCHOISE
+        else:
+            update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
+            return CATCHREPLY7
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        return CATCHREPLY7
+
 def cancel(update, _):
     user = update.message.from_user
     logger.info("User %s finished work with calculator.", user.first_name)
     update.message.reply_text(
-        'Спасибо, что посетили нас', 
+        'Спасибо, что посетили нас',
         reply_markup=ReplyKeyboardRemove()
     )
-    return ConversationHandler.END     
+    return ConversationHandler.END
+
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
@@ -140,7 +223,7 @@ if __name__ == '__main__':
     dispatcher = updater.dispatcher
 
     # Определяем обработчик разговоров `ConversationHandler` 
-    conv_handler = ConversationHandler( # здесь строится логика разговора
+    conv_handler = ConversationHandler(  # здесь строится логика разговора
         # точка входа в разговор
         entry_points=[CommandHandler('start', start)],
         # этапы разговора, каждый со своим списком обработчиков сообщений
@@ -151,6 +234,10 @@ if __name__ == '__main__':
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
             CATCHREPLY3: [MessageHandler(Filters.text & ~Filters.command, power_oper)],
+            DIVISION: [MessageHandler(Filters.text & ~Filters.command, division_ch)],
+            CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
+            CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
+            CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)]
         },
         # точка выхода из разговора
         fallbacks=[CommandHandler('cancel', cancel)],
