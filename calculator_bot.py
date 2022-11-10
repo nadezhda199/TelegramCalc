@@ -21,8 +21,8 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
-MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
-    10)
+MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, CATCHREPLY4, DIVISION, CATCHREPLY5,\
+CATCHREPLY6, CATCHREPLY7 = range(11)
 
 
 def start(update, _):
@@ -211,7 +211,6 @@ def division(update, _):
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY7
 
-=======
 def sqrt_oper(update, _):
     msg = update.message.text
     print(msg)
@@ -257,7 +256,7 @@ if __name__ == '__main__':
             DIVISION: [MessageHandler(Filters.text & ~Filters.command, division_ch)],
             CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
             CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
-            CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)]
+            CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)],
             CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
 
         },
