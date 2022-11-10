@@ -89,8 +89,8 @@ def sum_oper(update, _):
     print(msg)
     items = msg.split() # /sum 123 534543
     try:
-        x = int(items[0])
-        y = int(items[1])
+        x = float(items[0])
+        y = float(items[1])
         update.message.reply_text(f'{x}+{y} = {x+y}')
         return OPERCHOISE 
     except:
@@ -102,8 +102,8 @@ def subtraction_oper(update, _):
     print(msg)
     items = msg.split()
     try:
-        x = int(items[0])
-        y = int(items[1])
+        x = float(items[0])
+        y = float(items[1])
         update.message.reply_text(f'{x}-{y} = {x - y}')
         return OPERCHOISE
     except:
@@ -115,10 +115,10 @@ def power_oper(update, _):
     print(msg)
     items = msg.split()
     try:
-        x = int(items[0])
-        y = int(items[1])
+        x = float(items[0])
+        y = float(items[1])
         update.message.reply_text(f'{x}**{y} = {x**y}')
-        return MAINMENU 
+        return OPERCHOISE 
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY3
@@ -135,7 +135,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("Token")
+    updater = Updater("5735131343:AAHlO1Ppv0VktsGV4-B8Rhzf3oKPFdlsfPQ")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
