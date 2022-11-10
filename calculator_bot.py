@@ -21,8 +21,9 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
-MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, CATCHREPLY4, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
-    11)
+
+MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, CATCHREPLY4, DIVISION, CATCHREPLY5,\
+CATCHREPLY6, CATCHREPLY7 = range(11)
 
 
 def start(update, _):
@@ -84,7 +85,7 @@ def oper_choice(update, _):
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY3 # возведение в степень рациональных чисел
     elif oper == "Деление":
-        reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Выход']]
+        reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Главное меню']]
         markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
         return DIVISION # выбор вида деления 
@@ -98,9 +99,6 @@ def oper_choice(update, _):
         return MAINMENU
     else:
         pass
-
-
-
 
 def sum_oper(update, _):
     user = update.message.from_user
@@ -162,12 +160,14 @@ def division_ch(update, _):
     elif msg == 'Обычное':
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY7
-    elif msg == 'Выход':
-        update.message.reply_text('Возвращение в главное меню')
+    elif msg == "Главное меню":
+        update.message.reply_text(
+            'возвращение в главное меню',
+        )
         return MAINMENU
     else:
         update.message.reply_text('Попобуйте еще раз выбрать')
-        return OPERCHOISE # меню выбора оператора
+        return DIVISION
 
 
 def div_rem(update, _):
@@ -179,11 +179,16 @@ def div_rem(update, _):
         y = float(items[1])
         update.message.reply_text(f'{x}%{y} = {x % y}')
         logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x%y)
-        return OPERCHOISE # меню выбора оператора
+        #if y == 0:
+            #update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
+            #return CATCHREPLY5
+        #else:
+            #update.message.reply_text(f'{x}%{y} = {x % y}')
+            return DIVISION
     except:
         update.message.reply_text('Ошибка ввода')
         logger.error("Ошибка ввода", ext_info = True) # вот тут я применил метод error модуля logging и здесь я остановился с включением логов
-        return DIVISION
+        return CATCHREPLY5
 
 
 def division_int(update, _):
@@ -195,7 +200,7 @@ def division_int(update, _):
         y = float(items[1])
         if y != 0:
             update.message.reply_text(f'{x}//{y} = {x // y}')
-            return OPERCHOISE # меню выбора оператора
+            return DIVISION
         else:
             update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
             return CATCHREPLY6
@@ -213,14 +218,13 @@ def division(update, _):
         y = float(items[1])
         if y != 0:
             update.message.reply_text(f'{x}/{y} = {round((x / y),2)}')
-            return OPERCHOISE # меню выбора оператора
+            return DIVISION
         else:
             update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
             return CATCHREPLY7
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY7
-
 
 def sqrt_oper(update, _):
     user = update.message.from_user
@@ -265,11 +269,12 @@ if __name__ == '__main__':
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
             CATCHREPLY3: [MessageHandler(Filters.text & ~Filters.command, power_oper)],
-            DIVISION: [MessageHandler(Filters.text & ~Filters.command, division_ch)],
+            CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
+            DIVISION: [MessageHandler(Filters.regex('^(Остаток|Целочисленное|Обычное|Главное меню)$'), division_ch)],
             CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
             CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
             CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)],
-            CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
+
 
         },
         # точка выхода из разговора
