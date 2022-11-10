@@ -135,7 +135,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("5735131343:AAHlO1Ppv0VktsGV4-B8Rhzf3oKPFdlsfPQ")
+    updater = Updater("Token")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
