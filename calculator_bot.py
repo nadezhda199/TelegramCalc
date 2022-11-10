@@ -19,7 +19,7 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню|/cancel"
 
-MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2 = range(5)
+MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3 = range(6)
 
 def start(update, _):
     # Начинаем разговор с вопроса
@@ -73,6 +73,9 @@ def oper_choise(update, _):
     elif oper == "Вычитание":
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY2
+    elif oper == "Возведение в степень":
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY3
     elif oper == "Главное меню":
         return MAINMENU
     else:
@@ -103,6 +106,19 @@ def subtraction_oper(update, _):
     except:
         update.message.reply_text('Вы ввели неправильно, жмакните /start')
         return CATCHREPLY2
+
+def power_oper(update, _):
+    msg = update.message.text
+    print(msg)
+    items = msg.split()
+    try:
+        x = int(items[0])
+        y = int(items[1])
+        update.message.reply_text(f'{x}**{y} = {x**y}')
+        return MAINMENU 
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        return CATCHREPLY3
          
     
 def cancel(update, _):
@@ -131,6 +147,7 @@ if __name__ == '__main__':
             OPERCHOISE: [MessageHandler(Filters.regex(f'^{operation_keybord_main}$'), oper_choise)],
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
+            CATCHREPLY3: [MessageHandler(Filters.text & ~Filters.command, power_oper)],
         },
         # точка выхода из разговора
         fallbacks=[CommandHandler('cancel', cancel)],
