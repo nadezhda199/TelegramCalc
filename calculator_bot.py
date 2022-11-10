@@ -83,7 +83,7 @@ def oper_choice(update, _):
         return CATCHREPLY3
     elif oper == "Деление":
         reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Главное меню']]
-        markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+        markup_key = ReplyKeyboardMarkup(reply_keyboard, True)
         update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
         return DIVISION
     elif oper == "Корень квадратный числа":
