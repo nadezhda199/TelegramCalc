@@ -1,4 +1,5 @@
 import logging
+from math import sqrt
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
     Updater,
@@ -85,6 +86,9 @@ def oper_choice(update, _):
         markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
         return DIVISION
+    elif oper == "Корень квадратный числа":
+        update.message.reply_text('Введите число')
+        return CATCHREPLY4
     elif oper == "Главное меню":
         update.message.reply_text(
             'возвращение в главное меню',
@@ -136,6 +140,7 @@ def power_oper(update, _):
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY3
+
 
 def division_ch(update, _):
     msg = update.message.text
@@ -206,6 +211,21 @@ def division(update, _):
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY7
 
+=======
+def sqrt_oper(update, _):
+    msg = update.message.text
+    print(msg)
+    items = msg
+    try:
+        x = float(items)
+        update.message.reply_text(f'√{x}= {round(sqrt(x),2)}')
+        return OPERCHOISE 
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        return CATCHREPLY4
+         
+    
+
 def cancel(update, _):
     user = update.message.from_user
     logger.info("User %s finished work with calculator.", user.first_name)
@@ -238,6 +258,8 @@ if __name__ == '__main__':
             CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
             CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
             CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)]
+            CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
+
         },
         # точка выхода из разговора
         fallbacks=[CommandHandler('cancel', cancel)],
