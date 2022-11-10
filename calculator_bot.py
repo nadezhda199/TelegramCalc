@@ -92,7 +92,8 @@ def sum_oper(update, _):
         x = float(items[0])
         y = float(items[1])
         update.message.reply_text(f'{x}+{y} = {x+y}')
-        return OPERCHOISE 
+        return OPERCHOISE
+ 
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY       
