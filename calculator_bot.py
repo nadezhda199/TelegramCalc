@@ -39,7 +39,7 @@ def mainmenu(update, _):
     # Список кнопок для ответа
     reply_keyboard = [['Рациональные', 'Комплексные', 'Выход']]
     # Создаем простую клавиатуру для ответа
-    markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+    markup_key = ReplyKeyboardMarkup(reply_keyboard, True)
     # Начинаем разговор с вопроса
     update.message.reply_text(
         'Выберите с какими числами вы хотите работать',
@@ -236,7 +236,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("Token")
+    updater = Updater("5687323526:AAHmlKzSjgl91iqj59c7W9x0D35ULV1-URE")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
