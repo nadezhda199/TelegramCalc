@@ -21,8 +21,8 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
-MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
-    10)
+MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, CATCHREPLY4, DIVISION, CATCHREPLY5, CATCHREPLY6, CATCHREPLY7 = range(
+    11)
 
 
 def start(update, _):
@@ -35,7 +35,7 @@ def start(update, _):
 
 def mainmenu(update, _):
     user = update.message.from_user
-    logger.info("User %s started work with calculator.", user.first_name)
+    logger.info("Пользователь %s начал работу с калькулятором.", user.first_name)
     # Список кнопок для ответа
     reply_keyboard = [['Рациональные', 'Комплексные', 'Выход']]
     # Создаем простую клавиатуру для ответа
@@ -45,7 +45,7 @@ def mainmenu(update, _):
         'Выберите с какими числами вы хотите работать',
         reply_markup=markup_key, )
 
-    return CHOOSING
+    return CHOOSING # выбор вида чисел
 
 
 def choosing(update, _):
@@ -54,13 +54,15 @@ def choosing(update, _):
     if num_choiсe == 'Рациональные':
         markup_key = ReplyKeyboardMarkup(operation_keybord, one_time_keyboard=True)
         update.message.reply_text('Какое действие вы хотите выполнить?', reply_markup=markup_key, )
-        return OPERCHOISE
+        logger.info("Пользователь %s выбрал рациональные числа.", user.first_name)
+        return OPERCHOISE # меню выбора оператора
     elif num_choiсe == 'Комплексные':
         markup_key = ReplyKeyboardMarkup(operation_keybord, one_time_keyboard=True)
         update.message.reply_text('Какое действие вы хотите выполнить?', reply_markup=markup_key, )
-        return OPERCHOISE
+        logger.info("Пользователь %s выбрал комплексные числа.", user.first_name)
+        return OPERCHOISE # меню выбора оператора
     elif num_choiсe == 'Выход':
-        logger.info("User %s finished work with calculator.", user.first_name)
+        logger.info("Пользователь %s вышел", user.first_name)
         update.message.reply_text(
             'Спасибо, что посетили нас',
             reply_markup=ReplyKeyboardRemove()
@@ -74,21 +76,21 @@ def oper_choice(update, _):
     oper = update.message.text
     if oper == "Сложение":
         update.message.reply_text('Введите два числа через пробел')
-        return CATCHREPLY
+        return CATCHREPLY # сложение рациональных чисел
     elif oper == "Вычитание":
         update.message.reply_text('Введите два числа через пробел')
-        return CATCHREPLY2
+        return CATCHREPLY2 # вычитание рациональных чисел
     elif oper == "Возведение в степень":
         update.message.reply_text('Введите два числа через пробел')
-        return CATCHREPLY3
+        return CATCHREPLY3 # возведение в степень рациональных чисел
     elif oper == "Деление":
         reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Выход']]
         markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
-        return DIVISION
+        return DIVISION # выбор вида деления 
     elif oper == "Корень квадратный числа":
         update.message.reply_text('Введите число')
-        return CATCHREPLY4
+        return CATCHREPLY4 # вычисляет квадратный корень числа
     elif oper == "Главное меню":
         update.message.reply_text(
             'возвращение в главное меню',
@@ -101,6 +103,7 @@ def oper_choice(update, _):
 
 
 def sum_oper(update, _):
+    user = update.message.from_user
     msg = update.message.text
     print(msg)
     items = msg.split()  # /sum 123 534543
@@ -108,13 +111,15 @@ def sum_oper(update, _):
         x = float(items[0])
         y = float(items[1])
         update.message.reply_text(f'{x}+{y} = {x + y}')
-        return OPERCHOISE
+        logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x+y)
+        return OPERCHOISE # меню выбора оператора
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY
 
 
 def subtraction_oper(update, _):
+    user = update.message.from_user
     msg = update.message.text
     print(msg)
     items = msg.split()
@@ -122,13 +127,15 @@ def subtraction_oper(update, _):
         x = float(items[0])
         y = float(items[1])
         update.message.reply_text(f'{x}-{y} = {x - y}')
-        return OPERCHOISE
+        logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x-y)
+        return OPERCHOISE # меню выбора оператора
     except:
         update.message.reply_text('Вы ввели неправильно, жмакните /start')
         return CATCHREPLY2
 
 
 def power_oper(update, _):
+    user = update.message.from_user
     msg = update.message.text
     print(msg)
     items = msg.split()
@@ -136,13 +143,15 @@ def power_oper(update, _):
         x = float(items[0])
         y = float(items[1])
         update.message.reply_text(f'{x}**{y} = {x ** y}')
-        return OPERCHOISE
+        logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x**y)
+        return OPERCHOISE # меню выбора оператора
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY3
 
 
 def division_ch(update, _):
+    user = update.message.from_user
     msg = update.message.text
     if msg == 'Остаток':
         update.message.reply_text('Введите два числа через пробел')
@@ -158,27 +167,27 @@ def division_ch(update, _):
         return MAINMENU
     else:
         update.message.reply_text('Попобуйте еще раз выбрать')
-        return OPERCHOISE
+        return OPERCHOISE # меню выбора оператора
 
 
 def div_rem(update, _):
+    user = update.message.from_user
     msg = update.message.text
     items = msg.split()
     try:
         x = float(items[0])
         y = float(items[1])
-        if y == 0:
-            update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
-            return CATCHREPLY5
-        else:
-            update.message.reply_text(f'{x}%{y} = {x % y}')
-            return OPERCHOISE
+        update.message.reply_text(f'{x}%{y} = {x % y}')
+        logger.info("Пример пользователя %s: %s + %s = %s ", user.first_name, x, y, x%y)
+        return OPERCHOISE # меню выбора оператора
     except:
-        update.message.reply_text('Вы ввели неправильно, введите еще раз')
-        return CATCHREPLY5
+        update.message.reply_text('Ошибка ввода')
+        logger.error("Ошибка ввода", ext_info = True) # вот тут я применил метод error модуля logging и здесь я остановился с включением логов
+        return DIVISION
 
 
 def division_int(update, _):
+    user = update.message.from_user
     msg = update.message.text
     items = msg.split()
     try:
@@ -186,7 +195,7 @@ def division_int(update, _):
         y = float(items[1])
         if y != 0:
             update.message.reply_text(f'{x}//{y} = {x // y}')
-            return OPERCHOISE
+            return OPERCHOISE # меню выбора оператора
         else:
             update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
             return CATCHREPLY6
@@ -196,6 +205,7 @@ def division_int(update, _):
 
 
 def division(update, _):
+    user = update.message.from_user
     msg = update.message.text
     items = msg.split()
     try:
@@ -203,7 +213,7 @@ def division(update, _):
         y = float(items[1])
         if y != 0:
             update.message.reply_text(f'{x}/{y} = {round((x / y),2)}')
-            return OPERCHOISE
+            return OPERCHOISE # меню выбора оператора
         else:
             update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
             return CATCHREPLY7
@@ -211,15 +221,16 @@ def division(update, _):
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY7
 
-=======
+
 def sqrt_oper(update, _):
+    user = update.message.from_user
     msg = update.message.text
     print(msg)
     items = msg
     try:
         x = float(items)
         update.message.reply_text(f'√{x}= {round(sqrt(x),2)}')
-        return OPERCHOISE 
+        return OPERCHOISE # меню выбора оператора 
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY4
@@ -257,7 +268,7 @@ if __name__ == '__main__':
             DIVISION: [MessageHandler(Filters.text & ~Filters.command, division_ch)],
             CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
             CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
-            CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)]
+            CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)],
             CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
 
         },
