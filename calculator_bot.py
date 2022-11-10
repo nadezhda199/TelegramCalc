@@ -40,7 +40,7 @@ def mainmenu(update, _):
     # Список кнопок для ответа
     reply_keyboard = [['Рациональные', 'Комплексные', 'Выход']]
     # Создаем простую клавиатуру для ответа
-    markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+    markup_key = ReplyKeyboardMarkup(reply_keyboard, True)
     # Начинаем разговор с вопроса
     update.message.reply_text(
         'Выберите с какими числами вы хотите работать',
@@ -86,7 +86,7 @@ def oper_choice(update, _):
         return CATCHREPLY3 # возведение в степень рациональных чисел
     elif oper == "Деление":
         reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Главное меню']]
-        markup_key = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+        markup_key = ReplyKeyboardMarkup(reply_keyboard, True)
         update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
         return DIVISION # выбор вида деления 
     elif oper == "Корень квадратный числа":
@@ -253,7 +253,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("Token")
+    updater = Updater("token")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
