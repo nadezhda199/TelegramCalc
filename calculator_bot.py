@@ -1,4 +1,5 @@
-import logging 
+import logging
+from math import sqrt
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
     Updater,
@@ -19,7 +20,7 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
-MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3 = range(6)
+MAINMENU,CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3,CATCHREPLY4 = range(7)
 
 def start(update, _):
     # Начинаем разговор с вопроса
@@ -76,6 +77,9 @@ def oper_choice(update, _):
     elif oper == "Возведение в степень":
         update.message.reply_text('Введите два числа через пробел')
         return CATCHREPLY3
+    elif oper == "Корень квадратный числа":
+        update.message.reply_text('Введите число')
+        return CATCHREPLY4
     elif oper == "Главное меню":
         update.message.reply_text(
         'возвращение в главное меню', 
@@ -122,6 +126,18 @@ def power_oper(update, _):
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY3
+
+def sqrt_oper(update, _):
+    msg = update.message.text
+    print(msg)
+    items = msg
+    try:
+        x = float(items)
+        update.message.reply_text(f'√{x}= {round(sqrt(x),2)}')
+        return OPERCHOISE 
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        return CATCHREPLY4
          
     
 def cancel(update, _):
@@ -151,6 +167,7 @@ if __name__ == '__main__':
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
             CATCHREPLY3: [MessageHandler(Filters.text & ~Filters.command, power_oper)],
+            CATCHREPLY4: [MessageHandler(Filters.text & ~Filters.command, sqrt_oper)],
         },
         # точка выхода из разговора
         fallbacks=[CommandHandler('cancel', cancel)],
