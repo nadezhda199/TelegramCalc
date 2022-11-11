@@ -1,5 +1,6 @@
 import logging
 from math import sqrt
+from compl import make_complex
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
     Updater,
@@ -22,8 +23,8 @@ operation_keybord = [["Сложение", "Вычитание", "Умножен�
 operation_keybord_main = "Сложение|Вычитание|Умножение|Деление|Возведение в степень|Корень квадратный числа|Главное меню"
 
 
-MAINMENU, CHOOSING, OPERCHOISE, CATCHREPLY, CATCHREPLY2, CATCHREPLY3, CATCHREPLY4, DIVISION, CATCHREPLY5,\
-CATCHREPLY6, CATCHREPLY7 = range(11)
+MAINMENU, CHOOSING, OPERCHOISE, OPERCHOISE2,CATCHREPLY, CATCHREPLY2, CATCHREPLY3, CATCHREPLY4, DIVISION, CATCHREPLY5,\
+CATCHREPLY6, CATCHREPLY7,MULTIPLY = range(13)
 
 
 def start(update, _):
@@ -61,7 +62,7 @@ def choosing(update, _):
         markup_key = ReplyKeyboardMarkup(operation_keybord, one_time_keyboard=True)
         update.message.reply_text('Какое действие вы хотите выполнить?', reply_markup=markup_key, )
         logger.info("Пользователь %s выбрал комплексные числа.", user.first_name)
-        return OPERCHOISE # меню выбора оператора
+        return OPERCHOISE2 # меню выбора оператора
     elif num_choiсe == 'Выход':
         logger.info("Пользователь %s вышел", user.first_name)
         update.message.reply_text(
@@ -92,6 +93,9 @@ def oper_choice(update, _):
     elif oper == "Корень квадратный числа":
         update.message.reply_text('Введите число')
         return CATCHREPLY4 # вычисляет квадратный корень числа
+    elif oper == "Умножение":
+        update.message.reply_text('Введите два числа через пробел')
+        return MULTIPLY # вычисляет квадратный корень числа
     elif oper == "Главное меню":
         update.message.reply_text(
             'возвращение в главное меню',
@@ -99,6 +103,36 @@ def oper_choice(update, _):
         return MAINMENU
     else:
         pass
+    
+def oper_choice2(update, _):
+    oper = update.message.text
+    if oper == "Сложение":
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY # сложение рациональных чисел
+    elif oper == "Вычитание":
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY2 # вычитание рациональных чисел
+    elif oper == "Возведение в степень":
+        update.message.reply_text('Введите два числа через пробел')
+        return CATCHREPLY3 # возведение в степень рациональных чисел
+    elif oper == "Деление":
+        reply_keyboard = [['Остаток', 'Целочисленное', 'Обычное', 'Главное меню']]
+        markup_key = ReplyKeyboardMarkup(reply_keyboard, True)
+        update.message.reply_text('Выберите тип деления', reply_markup=markup_key)
+        return DIVISION # выбор вида деления 
+    elif oper == "Корень квадратный числа":
+        update.message.reply_text('Введите число')
+        return CATCHREPLY4 # вычисляет квадратный корень числа
+    elif oper == "Умножение":
+        update.message.reply_text('Введите два числа через пробел')
+        return MULTIPLY # вычисляет квадратный корень числа
+    elif oper == "Главное меню":
+        update.message.reply_text(
+            'возвращение в главное меню',
+        )
+        return MAINMENU
+    else:
+        pass    
 
 def sum_oper(update, _):
     user = update.message.from_user
@@ -128,7 +162,7 @@ def subtraction_oper(update, _):
         logger.info("Пример пользователя %s: %s - %s = %s ", user.first_name, x, y, x-y)
         return OPERCHOISE # меню выбора оператора
     except:
-        update.message.reply_text('Вы ввели неправильно, жмакните /start')
+        update.message.reply_text('Вы ввели неправильно, попробуйте еще раз')
         return CATCHREPLY2
 
 
@@ -238,6 +272,21 @@ def sqrt_oper(update, _):
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         return CATCHREPLY4
+    
+def multiply(update, _):
+    user = update.message.from_user
+    msg = update.message.text
+    print(msg)
+    items = msg.split()
+    try:
+        x = float(items[0])
+        y = float(items[1])
+        update.message.reply_text(f'{x}*{y} = {x * y}')
+        logger.info("Пример пользователя %s: %s * %s = %s ", user.first_name, x, y, x**y)
+        return OPERCHOISE # меню выбора оператора
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        return MULTIPLY
          
     
 
@@ -253,7 +302,7 @@ def cancel(update, _):
 
 if __name__ == '__main__':
     # Создаем Updater и передаем ему токен вашего бота.
-    updater = Updater("Token")
+    updater = Updater("5735131343:AAHlO1Ppv0VktsGV4-B8Rhzf3oKPFdlsfPQ")
     # получаем диспетчера для регистрации обработчиков
     dispatcher = updater.dispatcher
 
@@ -266,6 +315,7 @@ if __name__ == '__main__':
             MAINMENU: [MessageHandler(Filters.text & ~Filters.command, mainmenu)],
             CHOOSING: [MessageHandler(Filters.regex('^(Рациональные|Комплексные|Выход)$'), choosing)],
             OPERCHOISE: [MessageHandler(Filters.regex(f'^{operation_keybord_main}$'), oper_choice)],
+            OPERCHOISE2: [MessageHandler(Filters.regex(f'^{operation_keybord_main}$'), oper_choice2)],
             CATCHREPLY: [MessageHandler(Filters.text & ~Filters.command, sum_oper)],
             CATCHREPLY2: [MessageHandler(Filters.text & ~Filters.command, subtraction_oper)],
             CATCHREPLY3: [MessageHandler(Filters.text & ~Filters.command, power_oper)],
@@ -274,6 +324,7 @@ if __name__ == '__main__':
             CATCHREPLY5: [MessageHandler(Filters.text & ~Filters.command, div_rem)],
             CATCHREPLY6: [MessageHandler(Filters.text & ~Filters.command, division_int)],
             CATCHREPLY7: [MessageHandler(Filters.text & ~Filters.command, division)],
+            MULTIPLY: [MessageHandler(Filters.text & ~Filters.command, multiply)],
 
 
         },
