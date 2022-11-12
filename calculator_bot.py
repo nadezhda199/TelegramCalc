@@ -72,8 +72,6 @@ def choosing(update, _):
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
-    else:
-        pass
 
 
 def oper_choice(update, _):
@@ -105,8 +103,6 @@ def oper_choice(update, _):
             'возвращение в главное меню',
         )
         return MAINMENU
-    else:
-        pass
      
 def oper_choice2(update, _):
     oper = update.message.text
@@ -201,10 +197,6 @@ def division_ch(update, _):
             'возвращение в главное меню',
         )
         return MAINMENU
-    else:
-        update.message.reply_text('Попобуйте еще раз выбрать')
-        logger.error("Ошибка ввода", exc_info = True)
-        return DIVISION
 
 
 def div_rem(update, _):
@@ -214,17 +206,17 @@ def div_rem(update, _):
     try:
         x = float(items[0])
         y = float(items[1])
-        if y != 0:
-            update.message.reply_text(f'{x}%{y} = {x % y}')
-            logger.info("Пример пользователя %s: %s '%' %s = %s ", user.first_name, x, y, x%y)
-            return DIVISION
-        else:
-            update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
-            logger.info("Пользователь %s ввел ноль", user.first_name)
-            return CATCHREPLY5
     except:
         update.message.reply_text('Ошибка ввода')
         logger.error("Ошибка ввода", exc_info = True) # вот тут я применил метод error модуля logging и здесь я остановился с включением логов
+        return CATCHREPLY5
+    try:
+        update.message.reply_text(f'{x}%{y} = {x % y}')
+        logger.info("Пример пользователя %s: %s '%' %s = %s ", user.first_name, x, y, x%y)
+        return DIVISION
+    except:
+        update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
+        logger.error("Попытка деления на ноль", exc_info = True)
         return CATCHREPLY5
 
 
@@ -235,17 +227,17 @@ def division_int(update, _):
     try:
         x = float(items[0])
         y = float(items[1])
-        if y != 0:
-            update.message.reply_text(f'{x}//{y} = {x // y}')
-            logger.info("Пример пользователя %s: %s // %s = %s ", user.first_name, x, y, x//y)
-            return DIVISION
-        else:
-            update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
-            logger.info("Пользователь %s ввел ноль", user.first_name)
-            return CATCHREPLY6
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         logger.error("Ошибка ввода", exc_info = True)
+        return CATCHREPLY6        
+    try:
+        update.message.reply_text(f'{x}//{y} = {x // y}')
+        logger.info("Пример пользователя %s: %s // %s = %s ", user.first_name, x, y, x//y)
+        return DIVISION
+    except:
+        update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
+        logger.error("Попытка деления на ноль", exc_info = True)
         return CATCHREPLY6
 
 
@@ -256,17 +248,17 @@ def division(update, _):
     try:
         x = float(items[0])
         y = float(items[1])
-        if y != 0:
-            update.message.reply_text(f'{x}/{y} = {round((x / y),2)}')
-            logger.info("Пример пользователя %s: %s / %s = %s ", user.first_name, x, y, x/y)
-            return DIVISION
-        else:
-            update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
-            logger.info("Пользователь %s ввел ноль", user.first_name)
-            return CATCHREPLY7
     except:
         update.message.reply_text('Вы ввели неправильно, введите еще раз')
         logger.error("Ошибка ввода", exc_info = True)
+        return CATCHREPLY7    
+    try:
+        update.message.reply_text(f'{x}/{y} = {round((x / y),2)}')
+        logger.info("Пример пользователя %s: %s / %s = %s ", user.first_name, x, y, x/y)
+        return DIVISION
+    except:
+        update.message.reply_text('На ноль делить нельзя! Попробуйте еще раз')
+        logger.error("Попытка деления на ноль", exc_info = True)
         return CATCHREPLY7
 
 def sqrt_oper(update, _):
@@ -356,12 +348,17 @@ def div_compl(update, _):
     try:
         x = complex(float(items[0]), float(items[1]))
         y = complex(float(items[2]), float(items[3]))
+    except:
+        update.message.reply_text('Вы ввели неправильно, введите еще раз')
+        logger.error("Ошибка ввода", exc_info = True)
+        return COMPLDIV
+    try:    
         update.message.reply_text(f'{x}/{y} = {x / y}')
         logger.info("Пример пользователя %s: %s / %s = %s ", user.first_name, x, y, x/y)
         return OPERCHOICE2 # меню выбора оператора
     except:
-        update.message.reply_text('Вы ввели неправильно, введите еще раз')
-        logger.error("Ошибка ввода", exc_info = True)
+        update.message.reply_text('На ноль делить нельзя. Попробуйте что-нибудь еще')
+        logger.error("Попытка деления на ноль", exc_info = True)
         return COMPLDIV
     
 def pow_compl(update, _):
